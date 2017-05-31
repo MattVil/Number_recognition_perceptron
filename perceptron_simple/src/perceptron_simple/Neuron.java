@@ -9,19 +9,19 @@ import java.util.ArrayList;
  */
 public class Neuron {
 
-	private boolean state;
+	private int state;
 	private ArrayList<Synapse> connexion;
 	
-	public Neuron(boolean state){
+	public Neuron(int state){
 		this.state = state;
 		connexion = new ArrayList<Synapse>();
 	}
 
-	public boolean isState() {
+	public int getState() {
 		return state;
 	}
 
-	public void setState(boolean state) {
+	public void setState(int state) {
 		this.state = state;
 	}
 
