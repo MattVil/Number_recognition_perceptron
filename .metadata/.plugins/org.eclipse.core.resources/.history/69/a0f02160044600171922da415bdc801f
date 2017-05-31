@@ -1,0 +1,26 @@
+package perceptron_simple;
+
+/**
+ * 
+ * @author matthieu
+ *
+ */
+public class Synapse {
+
+	private Neuron Xi;
+	private Neuron Yj;
+	
+	private double Wij;
+	
+	public Synapse(Neuron Xi, Neuron Yj){
+		
+		this.Xi = Xi;
+		this.Yj = Yj;
+		
+		initWeight();
+	}
+	
+	public void initWeight(){
+		Wij = Math.random();
+	}
+}

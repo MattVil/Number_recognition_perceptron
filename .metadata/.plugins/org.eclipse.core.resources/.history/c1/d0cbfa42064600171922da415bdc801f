@@ -1,0 +1,25 @@
+package perceptron_simple;
+
+import java.util.ArrayList;
+
+/**
+ * 
+ * @author matthieu
+ *
+ */
+public class InputLayor {
+
+	private ArrayList<Synapse> layor;
+	
+	public InputLayor(){
+		layor = new ArrayList<Synapse>();
+	}
+
+	public ArrayList<Synapse> getLayor() {
+		return layor;
+	}
+
+	public void setLayor(ArrayList<Synapse> layor) {
+		this.layor = layor;
+	}
+}
