@@ -1,5 +1,7 @@
 package perceptron_simple;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author matthieu
@@ -7,4 +9,27 @@ package perceptron_simple;
  */
 public class OutputLayor {
 
+	private ArrayList<Neuron> layor;
+	private double teta;
+	
+	public OutputLayor(double teta){
+		this.teta = teta;
+		layor = new ArrayList<Neuron>();
+	}
+
+	public ArrayList<Neuron> getLayor() {
+		return layor;
+	}
+
+	public void setLayor(ArrayList<Neuron> layor) {
+		this.layor = layor;
+	}
+
+	public double getTeta() {
+		return teta;
+	}
+
+	public void setTeta(double teta) {
+		this.teta = teta;
+	}
 }
