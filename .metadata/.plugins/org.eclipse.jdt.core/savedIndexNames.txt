@@ -1,0 +1,18 @@
+INDEX VERSION 1.129+/home/matthieu/l2/stage_robotique/Reconnaissance_numero_perceptron_simple/.metadata/.plugins/org.eclipse.jdt.core
+2921242347.index
+849542117.index
+3988156872.index
+1657480482.index
+3718703446.index
+460396930.index
+3585915981.index
+3623641967.index
+3073413233.index
+1471243884.index
+2691264077.index
+3340607536.index
+1177728000.index
+2178872303.index
+3437500033.index
+373726256.index
+1129757453.index
