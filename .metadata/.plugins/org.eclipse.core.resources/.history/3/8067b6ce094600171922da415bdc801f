@@ -1,0 +1,46 @@
+package motor;
+
+import perceptron_simple.InputLayor;
+import perceptron_simple.Neuron;
+import perceptron_simple.OutputLayor;
+import perceptron_simple.Synapse;
+
+/**
+ * 
+ * @author matthieu
+ *
+ */
+public class Perceptron {
+	
+	public static final double TETA = 0.5;
+	public static final int NB_NEURON_INPUTLAYOR = 15;
+	public static final int NB_NEURON_OUTPUTLAYOR = 10;
+
+	public Perceptron(){
+		
+	}
+	
+	public void createNeuralNetwork(){
+		
+		/*Creation of the inputLayor*/
+		InputLayor inputLayor = new InputLayor();
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			Neuron neuronIn = new Neuron(false);
+			inputLayor.getLayor().add(neuronIn);
+		}
+		
+		/*Creation of the outputLayor*/
+		OutputLayor outputLayor = new OutputLayor(TETA);
+		for (int i = 0; i < NB_NEURON_OUTPUTLAYOR; i++) {
+			Neuron neuronOut = new Neuron(false);
+			outputLayor.getLayor().add(neuronOut);
+		}
+		
+		/*Creation of the connexions between neurons*/
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			for (int j = 0; j < NB_NEURON_OUTPUTLAYOR; j++) {
+				Synapse synapse = new Synapse(Xi, Yj)
+			}
+		}
+	}
+}

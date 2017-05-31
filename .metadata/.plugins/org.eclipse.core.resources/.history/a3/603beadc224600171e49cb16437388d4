@@ -1,0 +1,24 @@
+package gui;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class WindowGUI extends JFrame{
+	
+	private JPanel fond;
+	
+	public WindowGUI(){
+
+		fond = new TableGUI();
+		
+		this.getContentPane().add(fond);
+		
+		
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1200, 600);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+}

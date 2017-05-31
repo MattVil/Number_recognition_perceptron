@@ -1,0 +1,24 @@
+package motor;
+
+import perceptron_simple.InputLayor;
+import perceptron_simple.Neuron;
+
+/**
+ * 
+ * @author matthieu
+ *
+ */
+public class Motor {
+
+	public static void main(String[] args) {
+		
+	}
+	
+	public void createNeuralNetwork(){
+		/*Creation of the inputLayor*/
+		InputLayor inputLayor = new InputLayor();
+		for (int i = 0; i < 15; i++) {
+			Neuron neuron = new Neuron(false);
+		}
+	}
+}

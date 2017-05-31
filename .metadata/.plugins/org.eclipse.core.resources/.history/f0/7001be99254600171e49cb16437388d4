@@ -1,0 +1,107 @@
+package gui;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JPanel;
+
+public class TableGUI extends JPanel{
+	
+	private int[][] table;
+	private CellGUI[][] tableGUI;
+	
+	
+	public TableGUI(){
+		
+		setPreferredSize(new Dimension(800, 800));
+		
+		table = new int[5][3];
+		tableGUI = new CellGUI[5][3];
+		this.setLayout(new GridLayout(5, 3));
+		
+		initTable();
+	}
+	
+	public void initTable(){
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 3; j++) {
+				CellGUI cell = new CellGUI(i, j);
+				
+                MouseListener ml = new MouseListener() {
+                    public void mouseClicked(MouseEvent e) {
+                        
+                        int buttonDown = e.getButton();
+                        
+                        if (buttonDown == MouseEvent.BUTTON1) {
+                        	click(e, cell);
+                        }
+                    }
+					public void mousePressed(MouseEvent e) {
+
+					}
+					public void mouseReleased(MouseEvent e) {
+	
+					}
+					public void mouseEntered(MouseEvent e) {
+	
+					}
+					public void mouseExited(MouseEvent e) {
+
+					}
+                };
+                cell.addMouseListener(ml);
+                tableGUI[i][j] = cell;
+                add(tableGUI[i][j]);
+			}
+		}
+	}
+	
+	public int[] getInputValue(){
+		int[] tab = new int[15];
+		
+		int k=0;
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 3; j++) {
+				tab[k] = table[i][j];
+				k++;
+			}
+		}
+		
+		return tab;
+	}
+	
+	public void refreshMap(){
+		for(int i=0; i<5; i++){
+			for(int j=0; j<3; j++){
+				if(table[i][j] == 0){
+					tableGUI[i][j].setBackground(Color.WHITE);
+				}
+				else if(table[i][j] == 1){
+					tableGUI[i][j].setBackground(Color.BLACK);
+				}
+			}
+		}
+	}
+	
+	public void click(MouseEvent e, CellGUI cell) {
+//	   	System.out.println(cell.getX()+";"+cell.getY());
+//	   	System.out.println("\t" + (cell.getX())/267 +";"+(cell.getY())/160);
+	    int y = (cell.getX())/266;
+		int x = (cell.getY())/160;	
+		if(table[x][y] == 0)
+			table[x][y] = 1;
+		else
+			table[x][y] = 0;
+		
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 3; j++) {
+				System.out.print(table[i][j] + " ");
+			}
+			System.out.println("\n");
+		}
+		refreshMap();
+	}
+}

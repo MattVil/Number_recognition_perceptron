@@ -1,0 +1,47 @@
+package perceptron_simple;
+
+/**
+ * 
+ * @author matthieu
+ *
+ */
+public class Perceptron {
+	
+	public static final double TETA = 0.5;
+	public static final int NB_NEURON_INPUTLAYOR = 15;
+	public static final int NB_NEURON_OUTPUTLAYOR = 10;
+
+	private InputLayor inputLayor;
+	private OutputLayor outputLayor;
+	
+	
+	public Perceptron(){
+		
+	}
+	
+	public void createNeuralNetwork(){
+		
+		/*Creation of the inputLayor*/
+		inputLayor = new InputLayor();
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			Neuron neuronIn = new Neuron(false);
+			inputLayor.getLayor().add(neuronIn);
+		}
+		
+		/*Creation of the outputLayor*/
+		outputLayor = new OutputLayor(TETA);
+		for (int i = 0; i < NB_NEURON_OUTPUTLAYOR; i++) {
+			Neuron neuronOut = new Neuron(false);
+			outputLayor.getLayor().add(neuronOut);
+		}
+		
+		/*Creation of the connexions between neurons*/
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			for (int j = 0; j < NB_NEURON_OUTPUTLAYOR; j++) {
+				Synapse synapse = new Synapse(inputLayor.getLayor().get(i), outputLayor.getLayor().get(j));
+				inputLayor.getLayor().get(i).getConnexion().add(synapse);
+				outputLayor.getLayor().get(j).getConnexion().add(synapse);
+			}
+		}
+	}
+}
