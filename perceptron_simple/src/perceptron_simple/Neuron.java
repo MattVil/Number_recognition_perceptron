@@ -14,6 +14,7 @@ public class Neuron {
 	
 	public Neuron(boolean state){
 		this.state = state;
+		connexion = new ArrayList<Synapse>();
 	}
 
 	public boolean isState() {
