@@ -1,0 +1,104 @@
+package perceptron_simple;
+
+/**
+ * 
+ * @author matthieu
+ *
+ */
+public class Perceptron {
+	
+	public static final double TETA = 0.5;
+	public static final double EPSYLON = 0.75;
+	public static final int NB_NEURON_INPUTLAYOR = 15;
+	public static final int NB_NEURON_OUTPUTLAYOR = 10;
+	
+	public static final int resultTable[][] = { {1,0,0,0,0,0,0,0,0,0},
+												{0,1,0,0,0,0,0,0,0,0},
+												{0,0,1,0,0,0,0,0,0,0},
+												{0,0,0,1,0,0,0,0,0,0},
+												{0,0,0,0,1,0,0,0,0,0},
+												{0,0,0,0,0,1,0,0,0,0},
+												{0,0,0,0,0,0,1,0,0,0},
+												{0,0,0,0,0,0,0,1,0,0},
+												{0,0,0,0,0,0,0,0,1,0},
+												{0,0,0,0,0,0,0,0,0,1}};
+	
+	private int intputTable[] = new int[15]; 
+	
+	private InputLayor inputLayor;
+	private OutputLayor outputLayor;
+	
+	
+	public Perceptron(){
+		createNeuralNetwork();
+	}
+	
+	public void createNeuralNetwork(){
+		
+		/*Creation of the inputLayor*/
+		inputLayor = new InputLayor();
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			Neuron neuronIn = new Neuron(0);
+			inputLayor.getLayor().add(neuronIn);
+		}
+		
+		/*Creation of the outputLayor*/
+		outputLayor = new OutputLayor(TETA);
+		for (int i = 0; i < NB_NEURON_OUTPUTLAYOR; i++) {
+			Neuron neuronOut = new Neuron(0);
+			outputLayor.getLayor().add(neuronOut);
+		}
+		
+		/*Creation of the connexions between neurons*/
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			for (int j = 0; j < NB_NEURON_OUTPUTLAYOR; j++) {
+				Synapse synapse = new Synapse(inputLayor.getLayor().get(i), outputLayor.getLayor().get(j));
+				inputLayor.getLayor().get(i).getConnexion().add(synapse);
+				outputLayor.getLayor().get(j).getConnexion().add(synapse);
+			}
+		}
+	}
+	
+	public void updateWeight(int expectedResult){
+		/*comparaison between the outputLayor and the expected result*/
+		for (int i = 0; i < NB_NEURON_OUTPUTLAYOR; i++) {
+			//if the result is not as expected
+			if(outputLayor.getLayor().get(i).getState() != resultTable[expectedResult][i]){
+				//for each synapse
+				for (int j = 0; j < outputLayor.getLayor().get(i).getConnexion().size(); j++) {
+					//current weight 
+					double Wij = outputLayor.getLayor().get(i).getConnexion().get(j).getWij();
+					//value of the input neuron
+					int Xi = outputLayor.getLayor().get(i).getConnexion().get(j).getXi().getState();
+					//value of the output neuron
+					int Yj = outputLayor.getLayor().get(i).getConnexion().get(j).getYj().getState();
+					
+					//expeted value for the output neuron
+					int Yd = resultTable[expectedResult][i];
+					
+					//delta rule
+					double delta = EPSYLON * (Yd - Yj) * Xi;
+					//new value for the weight
+					double newWij = Wij + delta;
+					outputLayor.getLayor().get(i).getConnexion().get(j).setWij(newWij);
+				}
+			}
+		}
+	}
+
+	public InputLayor getInputLayor() {
+		return inputLayor;
+	}
+
+	public void setInputLayor(InputLayor inputLayor) {
+		this.inputLayor = inputLayor;
+	}
+
+	public OutputLayor getOutputLayor() {
+		return outputLayor;
+	}
+
+	public void setOutputLayor(OutputLayor outputLayor) {
+		this.outputLayor = outputLayor;
+	}
+}

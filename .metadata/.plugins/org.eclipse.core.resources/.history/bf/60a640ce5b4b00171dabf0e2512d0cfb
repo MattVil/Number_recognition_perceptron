@@ -1,0 +1,25 @@
+package perceptron_simple;
+
+public class Network {
+
+	public static int NB_NEURON_INPUTLAYOR;
+	public static int NB_NEURON_OUTPUTLAYOR;
+	
+	private double[][] weightTable;
+	
+	public Network(int sizeInputLayor, int sizeOutputLayor){
+		NB_NEURON_INPUTLAYOR = sizeInputLayor;
+		NB_NEURON_OUTPUTLAYOR = sizeOutputLayor;
+		weightTable = new double[NB_NEURON_OUTPUTLAYOR][NB_NEURON_INPUTLAYOR];
+	}
+	
+	public void initWeight(){
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			for (int j = 0; j < NB_NEURON_OUTPUTLAYOR; j++) {
+				
+			}
+		}
+	}
+	
+	
+}

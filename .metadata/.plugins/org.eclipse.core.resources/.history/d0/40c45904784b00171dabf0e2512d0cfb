@@ -1,0 +1,94 @@
+package gui;
+
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import perceptron_simple.Network;
+
+public class WindowGUI extends JFrame{
+	
+	private JPanel fond;
+	private TableGUI tablePart;
+	private JPanel settingPart;
+	
+	private JTextField expectedResult;
+	private JButton submit;
+	private JLabel result;
+	
+	private Network network;
+	
+	public WindowGUI(Network network){
+
+		this.network = network;
+		
+		initPart();
+		initSettingPart();
+		
+		this.getContentPane().add(fond);
+		
+		
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1600, 800);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+	
+	private void initPart(){
+		
+		fond = new JPanel();
+		fond.setLayout(new GridLayout(1, 2));
+		
+		tablePart = new TableGUI();
+		
+		settingPart = new JPanel();
+		
+		fond.add(tablePart);
+		fond.add(settingPart);
+	}
+	
+	private void initSettingPart(){
+		settingPart.setLayout(null);
+		
+		JLabel expectedTitle = new JLabel("Expected result :");
+		settingPart.add(expectedTitle);
+		expectedTitle.setBounds(335, 50, 200, 50);
+		
+		expectedResult = new JTextField();
+		settingPart.add(expectedResult);
+		expectedResult.setBounds(350, 100, 100, 30);
+		
+		submit = new JButton("Submit");
+		settingPart.add(submit);
+		submit.setBounds(350, 200, 100, 40);
+		
+		result = new JLabel("RESULT");
+		Font font = new Font("Arial",Font.BOLD,62);
+		result.setFont(font);
+		result.setBounds(100, 400, 800, 200);
+		settingPart.add(result);
+	}
+
+	public void setResult(JLabel result) {
+		this.result = result;
+	}
+	
+	class ActionLearn implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			int result = Integer.parseInt(expectedResult.getText());
+			int[] input = tablePart.getInputTable();
+			int[] output = network.calculResult(input);
+			//affichage
+			
+		}
+	}
+}

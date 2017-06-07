@@ -1,0 +1,234 @@
+package gui;
+
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
+
+import perceptron_simple.Network;
+
+public class WindowGUI extends JFrame{
+	
+	private JPanel fond;
+	private TableGUI tablePart;
+	private JPanel settingPart;
+	
+	private JTextField expectedResult;
+	private JButton submit;
+	private JButton save;
+	private JButton load;
+	private JLabel result;
+	
+	private Network network;
+	
+	public WindowGUI(Network network){
+
+		this.network = network;
+		
+		initPart();
+		initSettingPart();
+		
+		this.getContentPane().add(fond);
+		
+		
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1600, 800);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+	
+	private void initPart(){
+		
+		fond = new JPanel();
+		fond.setLayout(new GridLayout(1, 2));
+		
+		tablePart = new TableGUI();
+		
+		settingPart = new JPanel();
+		
+		fond.add(tablePart);
+		fond.add(settingPart);
+	}
+	
+	private void initSettingPart(){
+		settingPart.setLayout(null);
+		
+		save = new JButton("Save");
+		save.addActionListener(new ActionSave());
+		settingPart.add(save);
+		save.setBounds(400, 50, 100, 40);
+		
+		load = new JButton("Load");
+		settingPart.add(load);
+		load.setBounds(275, 50, 100, 40);
+		
+		JLabel expectedTitle = new JLabel("Expected result :");
+		settingPart.add(expectedTitle);
+		expectedTitle.setBounds(335, 100, 200, 50);
+		
+		expectedResult = new JTextField();
+		settingPart.add(expectedResult);
+		expectedResult.setBounds(350, 150, 100, 30);
+		
+		submit = new JButton("Submit");
+		submit.addActionListener(new ActionLearn());
+		settingPart.add(submit);
+		submit.setBounds(350, 250, 100, 40);
+		
+		result = new JLabel("RESULT");
+		Font font = new Font("Arial",Font.BOLD,62);
+		result.setFont(font);
+		result.setBounds(100, 400, 800, 200);
+		settingPart.add(result);
+	}
+	
+	public void setResultDisplay(int[] valueTable){
+		String str = "";
+		for (int i = 0; i < valueTable.length; i++) {
+			if(valueTable[i] == 1)
+				str += i + " ";
+		}
+		result.setText(str);
+	}
+	
+	public void saveLearning(){
+		FileWriter fileWriter = null;
+
+        CSVPrinter csvFilePrinter = null;
+         
+         String NEW_LINE_SEPARATOR = "\n";
+        CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
+
+        try {
+            fileWriter = new FileWriter("learning.csv");
+             
+            csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
+             
+            Object [] FILE_HEADER = {"0","1","2","3","4","5","6","7","8","9"};
+            csvFilePrinter.printRecord(FILE_HEADER);
+             
+            for (int i = 0; i < network.NB_NEURON_INPUTLAYOR; i++) {
+                ArrayList listOfData = new ArrayList();
+                for (int j = 0; j < network.NB_NEURON_OUTPUTLAYOR; j++) {
+                	listOfData.add(String.valueOf(network.getWeight(i, j)));
+				}
+                
+                csvFilePrinter.printRecord(listOfData);
+            }
+ 
+            System.out.println("CSV file was created successfully !!!");
+             
+        } catch (Exception e) {
+            System.out.println("Error in CsvFileWriter !!!");
+            e.printStackTrace();
+        } finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+                csvFilePrinter.close();
+            } catch (IOException e) {
+                System.out.println("Error while flushing/closing fileWriter/csvPrinter !!!");
+                e.printStackTrace();
+            }
+        }
+	}
+	
+	public void loadLearning(){
+		FileReader fileReader = null;
+
+			        CSVParser csvFileParser = null;
+
+			        //Create the CSVFormat object with the header mapping
+			       String [] FILE_HEADER_MAPPING = {"0","1","2","3","4","5","6","7","8","9"};
+			        CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING);
+
+			        try {
+
+			            //Create a new list of student to be filled by CSV file data 
+			            ArrayList listOfData = new ArrayList();
+
+			            //initialize FileReader object
+
+			            fileReader = new FileReader("learning.csv");
+
+			            //initialize CSVParser object
+			            csvFileParser = new CSVParser(fileReader, csvFileFormat);
+
+			           List<CSVRecord> csvRecords = csvFileParser.getRecords(); 
+
+			            //Read the CSV file records starting from the second record to skip the header
+			            for (int i = 1; i < csvRecords.size(); i++) {
+			                CSVRecord record = csvRecords.get(i);
+			                //Create a new student object and fill his data
+			                for (int j = 0; j < FILE_HEADER_MAPPING.length; j++) {
+								network.setWeight(i, j, Double.parseDouble(record.get(FILE_HEADER_MAPPING[j])));
+							}
+			                Student student = new Student(Long.parseLong(record.get(STUDENT_ID)), record.get(STUDENT_FNAME), record.get(STUDENT_LNAME), record.get(STUDENT_GENDER), Integer.parseInt(record.get(STUDENT_AGE)));
+		
+			                students.add(student);  
+			            }
+		
+			            //Print the new student list
+			            for (Student student : students) {
+			                System.out.println(student.toString());
+			            }
+			        } 
+			        catch (Exception e) {
+			            System.out.println("Error in CsvFileReader !!!");
+			            e.printStackTrace();
+			        } finally {
+			            try {
+			                fileReader.close();
+			                csvFileParser.close();
+			            } catch (IOException e) {
+			                System.out.println("Error while closing fileReader/csvFileParser !!!");
+			                e.printStackTrace();
+			            }
+			        }
+	}
+
+	public void setResult(JLabel result) {
+		this.result = result;
+	}
+	
+	class ActionLearn implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			if(!expectedResult.getText().equals("")){
+				int result = Integer.parseInt(expectedResult.getText());
+				int[] input = tablePart.getInputTable();
+				int[] output = network.calculResult(input);
+				setResultDisplay(output);
+				network.weightModification(result, output, input);
+			}
+			else{
+				JOptionPane jop3 = new JOptionPane();
+				jop3.showMessageDialog(null, "No expected value", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	class ActionSave implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			saveLearning();
+		}
+	}
+}

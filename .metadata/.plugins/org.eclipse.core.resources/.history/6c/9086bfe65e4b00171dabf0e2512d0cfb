@@ -1,0 +1,15 @@
+package motor;
+
+import gui.WindowGUI;
+import perceptron_simple.Network;
+
+public class Run {
+
+	public static void main(String[] args) {
+		WindowGUI w = new WindowGUI();
+		Network n = new Network(100, 10);
+		Run r = new Run();
+		
+
+	}
+}

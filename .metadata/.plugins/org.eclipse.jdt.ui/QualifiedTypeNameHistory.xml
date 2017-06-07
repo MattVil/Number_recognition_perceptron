@@ -3,11 +3,19 @@
 <fullyQualifiedTypeName name="perceptron_simple.Synapse"/>
 <fullyQualifiedTypeName name="perceptron_simple.InputLayor"/>
 <fullyQualifiedTypeName name="perceptron_simple.OutputLayor"/>
-<fullyQualifiedTypeName name="java.awt.GridLayout"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
 <fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
-<fullyQualifiedTypeName name="javax.swing.JPanel"/>
-<fullyQualifiedTypeName name="gui.TableGUI"/>
 <fullyQualifiedTypeName name="gui.WindowGUI"/>
+<fullyQualifiedTypeName name="gui.TableGUI"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="java.lang.SecurityException"/>
+<fullyQualifiedTypeName name="java.awt.GridLayout"/>
+<fullyQualifiedTypeName name="javax.swing.JTextField"/>
+<fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="javax.swing.JButton"/>
+<fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="perceptron_simple.Network"/>
+<fullyQualifiedTypeName name="motor.Run"/>
+<fullyQualifiedTypeName name="gui.WindowGUI.ActionLearn"/>
 </qualifiedTypeNameHistroy>

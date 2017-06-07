@@ -1,0 +1,84 @@
+package perceptron_simple;
+
+public class Network {
+
+	public static int NB_NEURON_INPUTLAYOR;
+	public static int NB_NEURON_OUTPUTLAYOR;
+	
+	public static final double TETA = 0.5;
+	public static final double EPSYLON = 0.75;
+	
+	private double[][] weightTable;
+	
+	
+	
+	public Network(int sizeInputLayor, int sizeOutputLayor){
+		NB_NEURON_INPUTLAYOR = sizeInputLayor;
+		NB_NEURON_OUTPUTLAYOR = sizeOutputLayor;
+		weightTable = new double[NB_NEURON_INPUTLAYOR][NB_NEURON_OUTPUTLAYOR];
+		
+		initWeight();
+	}
+	
+	public void initWeight(){
+		for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+			for (int j = 0; j < NB_NEURON_OUTPUTLAYOR; j++) {
+				weightTable[i][j] = Math.random();
+//				System.out.print(weightTable[i][j] + " ");
+			}
+//			System.out.println("");
+		}
+	}
+	
+	public int[] calculResult(int[] inputLayor){
+		int[] result = new int[NB_NEURON_OUTPUTLAYOR];
+		
+		for (int i = 0; i < NB_NEURON_OUTPUTLAYOR; i++) {
+			double potential = 0;
+			int nbInputActivate = 0;
+			for (int j = 0; j < NB_NEURON_INPUTLAYOR; j++) {
+				if(inputLayor[j] == 1){
+					potential += weightTable[j][i];
+					nbInputActivate ++;
+				}
+			}
+			potential = potential/nbInputActivate;
+			//System.out.println(potential);
+			if(potential > TETA)
+				result[i] = 1;
+			else
+				result[i] = 0;	
+		}
+		
+		return result;
+	}
+	
+	public void weightModification(int expectedResult, int[] outputLayor, int[] inputLayor){
+		for (int j = 0; j < NB_NEURON_OUTPUTLAYOR; j++) {
+
+			int Yd;
+			if(j == expectedResult)
+				Yd = 1;
+			else
+				Yd = 0;
+			
+			for (int i = 0; i < NB_NEURON_INPUTLAYOR; i++) {
+				double Wij = weightTable[i][j];
+				int Xi = inputLayor[i];
+				int Yj = outputLayor[j];
+				//delta rule
+				double delta = EPSYLON * (Yd - Yj) * Xi;
+				//new value for the weight
+				weightTable[i][j] = Wij + delta;
+			}
+		}
+	}
+	
+	public double getWeight(int i, int j){
+		return weightTable[i][j];
+	}
+	
+	public void setWeight(int i, int j, double data){
+		weightTable[i][j] = data;
+	}
+}

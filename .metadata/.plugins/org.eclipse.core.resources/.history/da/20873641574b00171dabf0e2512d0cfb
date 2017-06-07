@@ -1,0 +1,57 @@
+package gui;
+
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class WindowGUI extends JFrame{
+	
+	private JPanel fond;
+	private JPanel tablePart;
+	private JPanel settingPart;
+	
+	private JTextField expectedResult;
+	private JButton submit;
+	private JLabel result;
+	
+	public WindowGUI(){
+
+		initPart();
+		initSettingPart();
+		
+		this.getContentPane().add(fond);
+		
+		
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(1600, 800);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+	
+	private void initPart(){
+		
+		fond = new JPanel();
+		fond.setLayout(new GridLayout(1, 2));
+		
+		tablePart = new TableGUI();
+		
+		settingPart = new JPanel();
+		
+		fond.add(tablePart);
+		fond.add(settingPart);
+	}
+	
+	private void initSettingPart(){
+		settingPart.setLayout(null);
+		
+		expectedResult = new JTextField();
+		settingPart.add(expectedResult);
+		expectedResult.setBounds(250, 100, 100, 50);
+	}
+}
