@@ -9,7 +9,7 @@ public class Perceptron {
 	
 	public static final double TETA = 0.5;
 	public static final double EPSYLON = 0.75;
-	public static final int NB_NEURON_INPUTLAYOR = 15;
+	public static final int NB_NEURON_INPUTLAYOR = 100;
 	public static final int NB_NEURON_OUTPUTLAYOR = 10;
 	
 	public static final int resultTable[][] = { {1,0,0,0,0,0,0,0,0,0},

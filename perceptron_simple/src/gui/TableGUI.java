@@ -10,7 +10,11 @@ import javax.swing.JPanel;
 
 public class TableGUI extends JPanel{
 	
+	private final static int SIZE = 10;
+	
 	private int[][] table;
+	private int[] inputTable;
+	
 	private CellGUI[][] tableGUI;
 	
 	
@@ -18,16 +22,17 @@ public class TableGUI extends JPanel{
 		
 		setPreferredSize(new Dimension(800, 800));
 		
-		table = new int[5][3];
-		tableGUI = new CellGUI[5][3];
-		this.setLayout(new GridLayout(5, 3));
+		table = new int[SIZE][SIZE];
+		inputTable = new int[SIZE*SIZE];
+		tableGUI = new CellGUI[SIZE][SIZE];
+		this.setLayout(new GridLayout(SIZE, SIZE));
 		
 		initTable();
 	}
 	
 	public void initTable(){
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 3; j++) {
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
 				CellGUI cell = new CellGUI(i, j);
 				
                 MouseListener ml = new MouseListener() {
@@ -37,6 +42,14 @@ public class TableGUI extends JPanel{
                         
                         if (buttonDown == MouseEvent.BUTTON1) {
                         	click(e, cell);
+                        }
+                        else if(buttonDown == MouseEvent.BUTTON3){
+                        	for (int k = 0; k < SIZE; k++) {
+								for (int l = 0; l < SIZE; l++) {
+									table[k][l] = 0;
+								}
+							}
+                        	refreshMap();
                         }
                     }
 					public void mousePressed(MouseEvent e) {
@@ -59,23 +72,22 @@ public class TableGUI extends JPanel{
 		}
 	}
 	
-	public int[] getInputValue(){
-		int[] tab = new int[15];
+	public int[] getInputTable(){
 		
 		int k=0;
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 3; j++) {
-				tab[k] = table[i][j];
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				inputTable[k] = table[i][j];
 				k++;
 			}
 		}
 		
-		return tab;
+		return inputTable;
 	}
 	
 	public void refreshMap(){
-		for(int i=0; i<5; i++){
-			for(int j=0; j<3; j++){
+		for(int i=0; i<SIZE; i++){
+			for(int j=0; j<SIZE; j++){
 				if(table[i][j] == 0){
 					tableGUI[i][j].setBackground(Color.WHITE);
 				}
@@ -86,16 +98,29 @@ public class TableGUI extends JPanel{
 		}
 	}
 	
+	public int getTable(int i, int j){
+		return table[i][j];
+	}
+	
 	public void click(MouseEvent e, CellGUI cell) {
 //	   	System.out.println(cell.getX()+";"+cell.getY());
 //	   	System.out.println("\t" + (cell.getX())/267 +";"+(cell.getY())/160);
-	    int y = (cell.getX())/266;
-		int x = (cell.getY())/160;	
-		if(table[x][y] == 0)
-			table[x][y] = 1;
+	    int x = (cell.getX()*SIZE/800);
+		int y = (cell.getY())*SIZE/800;
+//		System.out.println(x + " - " + y);
+		if(table[y][x] == 0)
+			table[y][x] = 1;
 		else
-			table[x][y] = 0;
+			table[y][x] = 0;
 		
 		refreshMap();
+	}
+
+	public int[][] getTable() {
+		return table;
+	}
+
+	public void setTable(int[][] table) {
+		this.table = table;
 	}
 }
