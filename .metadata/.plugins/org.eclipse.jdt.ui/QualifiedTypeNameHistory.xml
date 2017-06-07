@@ -3,4 +3,11 @@
 <fullyQualifiedTypeName name="perceptron_simple.Synapse"/>
 <fullyQualifiedTypeName name="perceptron_simple.InputLayor"/>
 <fullyQualifiedTypeName name="perceptron_simple.OutputLayor"/>
+<fullyQualifiedTypeName name="java.awt.GridLayout"/>
+<fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="gui.TableGUI"/>
+<fullyQualifiedTypeName name="gui.WindowGUI"/>
 </qualifiedTypeNameHistroy>
